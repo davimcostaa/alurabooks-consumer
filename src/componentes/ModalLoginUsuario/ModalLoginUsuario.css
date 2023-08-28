@@ -6,8 +6,7 @@
 
 .corpoModalCadastro form {
     width: 500px;
-    max-width: 80%;
-    height: 80%;
+    max-width: 100%;
 }
 
 .corpoModalCadastro form .acoes {

@@ -1,11 +1,16 @@
+import { useState } from "react"
 import { Link } from "react-router-dom"
 import BotaoNavegacao from "../BotaoNavegacao"
 import ModalCadastroUsuario from "../ModalCadastroUsuario"
+import ModalLoginUsuario from "../ModalLoginUsuario"
 import logo from './assets/logo.png'
 import usuario from './assets/usuario.svg'
 import './BarraNavegacao.css'
 
 const BarraNavegacao = () => {
+    const [modalCadastroAberta, setModalCadastradoAberto] = useState(false)
+    const [modalLoginAberta, setModalLoginAberta] = useState(false)
+
     return (<nav className="ab-navbar">
         <h1 className="logo">
             <Link to="/">
@@ -46,15 +51,21 @@ const BarraNavegacao = () => {
         </ul>
         <ul className="acoes">
             <li>
-                <BotaoNavegacao texto="Login" textoAltSrc="Icone representando um usuário" imagemSrc={usuario} />
+                <BotaoNavegacao texto="Login" 
+                    textoAltSrc="Icone representando um usuário" 
+                    imagemSrc={usuario}
+                    onClick={() => setModalLoginAberta(true)}
+                    />
+                <ModalLoginUsuario aberta={modalLoginAberta} aoFechar={() => setModalLoginAberta(false)} />    
             </li>
             <li>
                 <BotaoNavegacao
                     texto="Cadastrar-se"
                     textoAltSrc="Icone representando um usuário"
                     imagemSrc={usuario}
+                    onClick={() => setModalCadastradoAberto(true)}
                 />
-                {/* <ModalCadastroUsuario /> */}
+                <ModalCadastroUsuario aberta={modalCadastroAberta} aoFechar={() => setModalCadastradoAberto(false)} />
             </li>
         </ul>
     </nav>)
