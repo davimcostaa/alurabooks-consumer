@@ -1,74 +1,96 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import BotaoNavegacao from "../BotaoNavegacao"
-import ModalCadastroUsuario from "../ModalCadastroUsuario"
-import ModalLoginUsuario from "../ModalLoginUsuario"
-import logo from './assets/logo.png'
-import usuario from './assets/usuario.svg'
-import './BarraNavegacao.css'
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import BotaoNavegacao from "../BotaoNavegacao";
+import ModalCadastroUsuario from "../ModalCadastroUsuario";
+import ModalLoginUsuario from "../ModalLoginUsuario";
+import logo from "./assets/logo.png";
+import usuario from "./assets/usuario.svg";
+import "./BarraNavegacao.css";
 
 const BarraNavegacao = () => {
-    const [modalCadastroAberta, setModalCadastradoAberto] = useState(false)
-    const [modalLoginAberta, setModalLoginAberta] = useState(false)
+  const [modalCadastroAberta, setModalCadastradoAberto] = useState(false);
+  const [modalLoginAberta, setModalLoginAberta] = useState(false);
 
-    return (<nav className="ab-navbar">
-        <h1 className="logo">
-            <Link to="/">
-                <img className="logo" src={logo} alt="Logo da AluraBooks" />
-            </Link>
-        </h1>
-        <ul className="navegacao">
-            <li>
-                <a href="#!">Categorias</a>
-                <ul className="submenu">
-                    <li>
-                        <Link to="/">
-                            Frontend
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/">
-                            Programação
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/">
-                            Infraestrutura
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/">
-                            Business
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/">
-                            Design e UX
-                        </Link>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul className="acoes">
-            <li>
-                <BotaoNavegacao texto="Login" 
-                    textoAltSrc="Icone representando um usuário" 
-                    imagemSrc={usuario}
-                    onClick={() => setModalLoginAberta(true)}
-                    />
-                <ModalLoginUsuario aberta={modalLoginAberta} aoFechar={() => setModalLoginAberta(false)} />    
-            </li>
-            <li>
-                <BotaoNavegacao
-                    texto="Cadastrar-se"
-                    textoAltSrc="Icone representando um usuário"
-                    imagemSrc={usuario}
-                    onClick={() => setModalCadastradoAberto(true)}
-                />
-                <ModalCadastroUsuario aberta={modalCadastroAberta} aoFechar={() => setModalCadastradoAberto(false)} />
-            </li>
-        </ul>
-    </nav>)
+  const token = sessionStorage.getItem("token");
+
+  const [usuarioLogado, setUsuarioLogado] = useState(token != null);
+
+  const aoEfetuarLogin = () => {
+    setUsuarioLogado(true)
+    setModalLoginAberta(false)
 }
 
-export default BarraNavegacao
+  return (
+    <nav className="ab-navbar">
+      <h1 className="logo">
+        <Link to="/">
+          <img className="logo" src={logo} alt="Logo da AluraBooks" />
+        </Link>
+      </h1>
+      <ul className="navegacao">
+        <li>
+          <a href="#!">Categorias</a>
+          <ul className="submenu">
+            <li>
+              <Link to="/">Frontend</Link>
+            </li>
+            <li>
+              <Link to="/">Programação</Link>
+            </li>
+            <li>
+              <Link to="/">Infraestrutura</Link>
+            </li>
+            <li>
+              <Link to="/">Business</Link>
+            </li>
+            <li>
+              <Link to="/">Design e UX</Link>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul className="acoes">
+        {!usuarioLogado && (
+          <>
+            <li>
+              <BotaoNavegacao
+                texto="Login"
+                textoAltSrc="Icone representando um usuário"
+                imagemSrc={usuario}
+                onClick={() => setModalLoginAberta(true)}
+              />
+              <ModalLoginUsuario
+                aberta={modalLoginAberta}
+                aoFechar={() => setModalLoginAberta(false)}
+                aoEfetuarLogin={aoEfetuarLogin}
+              />
+            </li>
+            <li>
+              <BotaoNavegacao
+                texto="Cadastrar-se"
+                textoAltSrc="Icone representando um usuário"
+                imagemSrc={usuario}
+                onClick={() => setModalCadastradoAberto(true)}
+              />
+              <ModalCadastroUsuario
+                aberta={modalCadastroAberta}
+                aoFechar={() => setModalCadastradoAberto(false)}
+              />
+            </li>
+          </>
+        )}
+        {usuarioLogado && (
+          <>
+            <li>
+                <Link to='/minha-conta/pedidos'>
+                    Minha Conta
+                </Link>
+            </li>
+          </>
+        )}
+      </ul>
+    </nav>
+  );
+};
+
+export default BarraNavegacao;

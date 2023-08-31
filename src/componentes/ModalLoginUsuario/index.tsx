@@ -9,7 +9,7 @@ import './ModalLoginUsuario.css'
 interface PropsModalLoginUsuario {
     aberta: boolean
     aoFechar: () => void
-    aoEfetuarLogin?: () => void
+    aoEfetuarLogin: () => void
 }
 
 const ModalLoginUsuario = ({ aberta, aoFechar, aoEfetuarLogin } : PropsModalLoginUsuario) => {
@@ -23,12 +23,13 @@ const ModalLoginUsuario = ({ aberta, aoFechar, aoEfetuarLogin } : PropsModalLogi
             email,
             senha,
         }
-        axios.post('http://localhost:8000/auth/login', usuario)
+        axios.post('http://localhost:8000/public/login', usuario)
             .then(resposta => {
                 sessionStorage.setItem('token', resposta.data.access_token)
                 setEmail('')
                 setSenha('')
                 aoFechar()
+                aoEfetuarLogin()
             })
             .catch(erro => {
             if (erro?.response?.data?.message) {

@@ -31,7 +31,7 @@ const ModalCadastroUsuario = ({aberta, aoFechar} : PropsModalCadastroUsuario ) =
             cep,
             complemento
         }
-        axios.post('http://localhost:8000/auth/register', usuario)
+        axios.post('http://localhost:8000/public/registrar', usuario)
             .then(() => {
                 alert("Usuário cadastrado com sucesso!")
                 setNome('')
