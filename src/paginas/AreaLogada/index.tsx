@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom"
 import './AreaLogada.css'
 
+
 export const AreaLogada = () => {
     return (<>
         <h1 className="AreaLogada_titulo">Minha conta</h1>
