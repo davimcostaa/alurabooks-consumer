@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BotaoNavegacao from "../BotaoNavegacao";
 import ModalCadastroUsuario from "../ModalCadastroUsuario";
 import ModalLoginUsuario from "../ModalLoginUsuario";
@@ -8,8 +8,11 @@ import usuario from "./assets/usuario.svg";
 import "./BarraNavegacao.css";
 
 const BarraNavegacao = () => {
+
   const [modalCadastroAberta, setModalCadastradoAberto] = useState(false);
   const [modalLoginAberta, setModalLoginAberta] = useState(false);
+  
+  let navigate = useNavigate()
 
   const token = sessionStorage.getItem("token");
 
@@ -18,7 +21,13 @@ const BarraNavegacao = () => {
   const aoEfetuarLogin = () => {
     setUsuarioLogado(true)
     setModalLoginAberta(false)
-}
+  }
+
+  const efetuarLogout = () => {
+    setUsuarioLogado(false)
+    sessionStorage.removeItem('token')
+    navigate('/')
+  }
 
   return (
     <nav className="ab-navbar">
@@ -86,7 +95,16 @@ const BarraNavegacao = () => {
                     Minha Conta
                 </Link>
             </li>
+            <li>
+              <BotaoNavegacao
+                      texto="Logout"
+                      textoAltSrc="Icone representando um usuário"
+                      imagemSrc={usuario}
+                      onClick={efetuarLogout}
+                      />
+            </li>
           </>
+          
         )}
       </ul>
     </nav>
