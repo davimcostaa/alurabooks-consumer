@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import http from "../../http";
+import { ICategoria } from "../../interfaces/ICategoria";
 import BotaoNavegacao from "../BotaoNavegacao";
 import ModalCadastroUsuario from "../ModalCadastroUsuario";
 import ModalLoginUsuario from "../ModalLoginUsuario";
@@ -11,6 +13,7 @@ const BarraNavegacao = () => {
 
   const [modalCadastroAberta, setModalCadastradoAberto] = useState(false);
   const [modalLoginAberta, setModalLoginAberta] = useState(false);
+  const [categorias, setCategorias] = useState<ICategoria[]>([]);
   
   let navigate = useNavigate()
 
@@ -29,6 +32,11 @@ const BarraNavegacao = () => {
     navigate('/')
   }
 
+  useEffect(() => {
+    http.get<ICategoria[]>('categorias')
+    .then(resposta => setCategorias(resposta.data))
+  }, [])
+
   return (
     <nav className="ab-navbar">
       <h1 className="logo">
@@ -40,21 +48,11 @@ const BarraNavegacao = () => {
         <li>
           <a href="#!">Categorias</a>
           <ul className="submenu">
-            <li>
-              <Link to="/">Frontend</Link>
-            </li>
-            <li>
-              <Link to="/">Programação</Link>
-            </li>
-            <li>
-              <Link to="/">Infraestrutura</Link>
-            </li>
-            <li>
-              <Link to="/">Business</Link>
-            </li>
-            <li>
-              <Link to="/">Design e UX</Link>
-            </li>
+            {categorias.map(categoria => (
+              <li key={categoria.id}>
+                <Link to={`categorias/${categoria.slug}`}>{categoria.nome}</Link>
+              </li>
+            ))}
           </ul>
         </li>
       </ul>
