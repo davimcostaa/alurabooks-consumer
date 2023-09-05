@@ -1,0 +1,63 @@
+.livro {
+    display: flex;
+    justify-content: center;
+    margin: 100px 150px;
+    gap: 24px;
+    padding: 0;
+}
+
+.foto {
+    padding-left: 0;
+}
+
+.fotoLivro {
+    width: 225px;
+    height: 321px;
+}
+
+.info {
+    width: 60%;
+}
+
+.info h2 {
+    font-size: 24px;
+    color: #002F52;
+    font-weight: 700;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.info h3 {
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 0;
+}
+
+.info p {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.info h4 {
+    margin-top: 32px;
+    color: #002F52;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.info span {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.cardInfo {
+    margin: 32px 150px;
+}
+
+.cardInfo h2 {
+    color: #002F52;
+    font-size: 20px;
+    font-weight: 700;
+}

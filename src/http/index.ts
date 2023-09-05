@@ -47,3 +47,23 @@ export const obterProdutosDaCategoria = async (categoria: ICategoria) => {
   
   return resposta.data
 }
+
+export const obterLivro = async (slug: string) => {
+  const resposta = await http.get<ILivro[]>('livros', {
+    params: {
+      slug: slug
+    }
+  })
+  
+  return resposta.data[0]
+}
+
+export const obterAutor = async (id: number) => {
+  const resposta = await http.get('autores', {
+    params: {
+      slug: id
+    }
+  })
+  
+  return resposta.data[0]
+}

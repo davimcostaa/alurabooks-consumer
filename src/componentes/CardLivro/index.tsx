@@ -2,8 +2,7 @@ import { AbBotao } from "ds-alurabooks"
 import { Link } from "react-router-dom"
 import { ILivro } from "../../interfaces/ILivro"
 
-
-import './CardLivro.css'
+import styles from './CardLivro.module.css'
 
 interface CardLivroProps {
     livro: ILivro
@@ -14,7 +13,7 @@ const obterValorMinimo = (livro: ILivro) => {
 }
 
 const CardLivro = ( { livro } : CardLivroProps) => {
-    return (<div className="livro" key={livro.id}>
+    return (<div className={styles.livro} key={livro.id}>
         <img src={livro.imagemCapa} alt={livro.descricao} />
         <ul>
             <li>
@@ -23,7 +22,7 @@ const CardLivro = ( { livro } : CardLivroProps) => {
             <li>
                 A partir de: <strong>{Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(obterValorMinimo(livro))}</strong>
             </li>
-            <li className="link-container">
+            <li className={styles.linkContainer}>
                 <Link to={`/livro/${livro.slug}`}>
                     <AbBotao texto="Comprar" />
                 </Link>
