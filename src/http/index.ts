@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IAutor } from "../interfaces/IAutor";
 import { ICategoria } from "../interfaces/ICategoria";
 import { ILivro } from "../interfaces/ILivro";
 
@@ -54,16 +55,19 @@ export const obterLivro = async (slug: string) => {
       slug: slug
     }
   })
+
+  if(resposta.data.length === 0) {
+    return null
+  }
   
   return resposta.data[0]
 }
 
 export const obterAutor = async (id: number) => {
-  const resposta = await http.get('autores', {
-    params: {
-      slug: id
-    }
-  })
-  
-  return resposta.data[0]
+  try {
+    const resposta = await http.get<IAutor>(`autores/${id}`)
+    return resposta.data
+  } catch (error) {
+    console.log('Não foi possível obter o autor')
+  }
 }
