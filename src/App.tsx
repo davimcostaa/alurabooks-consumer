@@ -3,6 +3,7 @@ import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import './App.css';
 import AbApolloClient from './componentes/ABApolloCliente';
+import CarrinhoProvider from './contextApi/carrinho';
 import Rotas from './rotas';
 
 const queryClient = new QueryClient()
@@ -10,11 +11,13 @@ const queryClient = new QueryClient()
 function App() {
     return (
         <AbApolloClient>
-            <QueryClientProvider client={queryClient}>
-                <BrowserRouter>
-                    <Rotas/>
-                </BrowserRouter>
-            </QueryClientProvider>
+            <CarrinhoProvider>
+                <QueryClientProvider client={queryClient}>
+                    <BrowserRouter>
+                        <Rotas/>
+                    </BrowserRouter>
+                </QueryClientProvider>
+            </CarrinhoProvider>
         </AbApolloClient>
     );
 }
