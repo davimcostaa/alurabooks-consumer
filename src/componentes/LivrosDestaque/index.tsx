@@ -43,7 +43,7 @@ const valorMinimo = selecionado ? Math.min(...selecionado.opcoesCompra.map(op =>
                 </header>
                 <h6>{selecionado?.titulo}</h6>
                 <p>{selecionado?.descricao}</p>
-                <p>Por: {selecionado?.autor}</p>
+
                 <footer>
                     <div className="preco">
                         <em>A partir de:</em>

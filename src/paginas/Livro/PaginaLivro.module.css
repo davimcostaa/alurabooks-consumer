@@ -71,3 +71,9 @@
 .quantidade {
     margin: 15px 0;
 }
+
+.tags {
+    display: flex;
+    gap: 12px;
+    padding-left: 145px;
+}
