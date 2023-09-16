@@ -1,5 +1,6 @@
 import { AbBotao } from "ds-alurabooks"
 import { Link } from "react-router-dom"
+import LoadingCarrinho from "../../componentes/LoaderCarrinho"
 import TituloPrincipal from "../../componentes/TituloPrincipal"
 import { useCarrinhoContext } from "../../contextApi/carrinho"
 
@@ -8,10 +9,10 @@ import ItemCarrinho from "./ItemCarrinho"
 
 const Carrinho = () => {
 
-    const { carrinho, adicionarItemCarrinho } = useCarrinhoContext()
+    const { carrinho, carregando } = useCarrinhoContext()
 
     return (<section className="pagina-carrinho">
-
+        {carregando && <LoadingCarrinho />}
         <TituloPrincipal texto="Minha sacola" />
         <div className="conteudo">
             <h4>Itens selecionados</h4>

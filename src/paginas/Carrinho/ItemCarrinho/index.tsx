@@ -4,12 +4,30 @@ import { IItemCarrinho } from "../../../interfaces/IItemCarrinho"
 import lixeira from './lixeira.png'
 
 import './ItemCarrinho.css'
+import { useCarrinhoContext } from "../../../contextApi/carrinho"
 
 interface ItemCarrinhoProps {
     item: IItemCarrinho
 }
 
 const ItemCarrinho = ({ item } : ItemCarrinhoProps) => {
+
+    const {adicionarItemCarrinho, removerItemCarrinho} = useCarrinhoContext()
+
+    const alterarQuantidadeDoItem = (quantidade: number) => {
+        if (quantidade === 0) {
+            removerItemCarrinho({
+                livro: item.livro,
+                opcaoCompra: item.opcaoCompra,
+                quantidade: quantidade
+            })
+        }
+        adicionarItemCarrinho({
+            livro: item.livro,
+            opcaoCompra: item.opcaoCompra,
+            quantidade: quantidade
+        })
+    }
 
     return (
         <div className="item-carrinho">
@@ -34,7 +52,10 @@ const ItemCarrinho = ({ item } : ItemCarrinhoProps) => {
                 </ul>
             </div>
             <div className="quantidade">
-                <AbInputQuantidade value={item.quantidade} onChange={() => console.log('[AbInputQuantidade] - onChange')}/>
+                <AbInputQuantidade 
+                    value={item.quantidade} 
+                    onChange={alterarQuantidadeDoItem}
+                />
             </div>
             <div>
                 <button className="btn-excluir">

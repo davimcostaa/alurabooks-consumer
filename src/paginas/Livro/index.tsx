@@ -5,11 +5,16 @@ import { AbBotao, AbGrupoOpcao, AbGrupoOpcoes, AbInputQuantidade, AbTag } from "
 import { useParams } from 'react-router'
 import { useLivro } from '../../graphql/livros/hooks'
 import Loader from '../../componentes/Loader'
+import { useCarrinhoContext } from '../../contextApi/carrinho'
 
 const Livro = () => {
 
   const params = useParams()
+
+  const { adicionarItemCarrinho } = useCarrinhoContext()
+
   const [opcao, setOpcao] = useState<AbGrupoOpcao>()
+  const [quantidade, setQuantidade] = useState(1)
 
   const { data, loading, error } = useLivro(params.slug || '')
   // const {data: livro, isLoading, error} = useQuery<ILivro | null, AxiosError>(['livro', params.slug], () => obterLivro(params.slug || ''))
@@ -20,9 +25,6 @@ const Livro = () => {
     return <h1>Ops! Algum erro inesperado aconteceu.</h1>
   }
 
-  // if (livro === null) {
-  //   return <h1>Livro não encontrado</h1>
-  // }
 
   if (loading) {
     return <Loader />
@@ -35,6 +37,24 @@ const Livro = () => {
     rodape: opcao.formatos ? opcao.formatos.join(',') : ''
 }))
     : []
+
+  const aoAdicionarItemAoCarrinho = () => {
+    if (!data?.livro) {
+        return
+    }
+
+    const opcaoCompra = data.livro.opcoesCompra.find(op => op.id === opcao?.id)
+    if (!opcaoCompra) {
+      alert('Por favor, seleciona uma opção de compra!')
+      return
+    }
+
+    adicionarItemCarrinho({
+        livro: data.livro,
+        quantidade,
+        opcaoCompra
+      })
+  }
 
   return (
     <>
@@ -59,9 +79,9 @@ const Livro = () => {
             </div>
             <span>*Você terá acesso às futuras atualizações do livro.</span>
             <div className={styles.quantidade}>
-            <AbInputQuantidade onChange={() => {}} value={0} />
+            <AbInputQuantidade onChange={setQuantidade} value={quantidade} />
             </div>
-            <AbBotao texto='Comprar' />
+            <AbBotao texto='Comprar' onClick={aoAdicionarItemAoCarrinho} />
         </div>
       </section>
 
